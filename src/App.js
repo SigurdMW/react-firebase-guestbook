@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BookForm from './components/BookForm';
 import BookEntry from './components/BookEntry';
 import base from './base';
+import NewUserByEmail from './components/NewUserByEmail';
 
 class App extends Component {
   constructor(){
@@ -18,7 +19,7 @@ class App extends Component {
 
   componentWillMount() {
     // this runs right before the <App> is rendered
-    this.ref = base.syncState(`entries`, {
+    this.ref = base.syncState(`users/1/entries`, {
       context: this,
       state: 'entries'
     });
@@ -58,6 +59,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Sigurds gjestebok</h1>
+        <NewUserByEmail />
         <BookForm handleBookFormSubmits={this.handleBookFormSubmits} />
         {
           Object
