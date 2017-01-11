@@ -8,8 +8,10 @@ class BookForm extends Component {
 			name: this.name.value
 		};
 		
-		this.props.handleBookFormSubmits(entry);
-		this.entryForm.reset();
+		if(this.text.value || this.name.value){
+			this.props.handleBookFormSubmits(entry);
+			this.entryForm.reset();
+		}
 	}
 
 	render(){
@@ -18,11 +20,11 @@ class BookForm extends Component {
 				<fieldset>
 					<legend>New guestbook entry</legend>
 					<label htmlFor="text">Text</label>
-					<textarea name=""  ref={(input) => this.text = input} cols="30" rows="10">
+					<textarea name="" className="form-control" ref={(input) => this.text = input} cols="30" rows="10">
 					</textarea>
 					<label htmlFor="name">Name</label>
-					<input type="text" ref={(input) => this.name = input} />
-					<button className="submit" type="submit">Send</button>
+					<input type="text" className="form-control" ref={(input) => this.name = input} />
+					<button className="submit btn btn-success" type="submit">Send</button>
 				</fieldset>
 			</form>
 		)
