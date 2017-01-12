@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BookForm from './components/BookForm';
 import BookEntry from './components/BookEntry';
+import LoginForm from './components/LoginForm';
 import base from './base';
 import NewUserByEmail from './components/NewUserByEmail';
 
@@ -11,9 +12,13 @@ class App extends Component {
     this.handleBookFormSubmits = this.handleBookFormSubmits.bind(this);
     this.deleteEntry = this.deleteEntry.bind(this);
     this.editEntry = this.editEntry.bind(this);
+    this.logout = this.logout.bind(this);
+    this.setUidAndUserInfoToState = this.setUidAndUserInfoToState.bind(this);
 
     this.state = {
-      entries: {}
+      entries: {},
+      users: {},
+      uid: null
     };
   }
 
@@ -23,6 +28,18 @@ class App extends Component {
       context: this,
       state: 'entries'
     });
+  }
+
+  setUidAndUserInfoToState(uid, data){
+    console.log({uid, data});
+    const users = {...this.state.users};
+    users[uid] = data;
+    this.setState({ users, uid });
+  }
+
+  logout() {
+    base.unauth();
+    this.setState({ uid: null });
   }
 
   handleBookFormSubmits(value){
@@ -56,11 +73,24 @@ class App extends Component {
   }
 
   render() {
+    const isLoggedIn = (base.auth().currentUser) ? true : false;
     return (
-      <div className="App">
+      <div className="container App">
         <h1>Sigurds gjestebok</h1>
-        <NewUserByEmail />
-        <BookForm handleBookFormSubmits={this.handleBookFormSubmits} />
+        {isLoggedIn &&
+          <button onClick={this.logout} className="btn btn-danger">Logg ut</button>
+        }
+        <div className="row">
+          <div className="col-md-6">
+            <NewUserByEmail setUidAndUserInfoToState={this.setUidAndUserInfoToState} />
+          </div>
+          <div className="col-md-6">
+            <LoginForm setUidAndUserInfoToState={this.setUidAndUserInfoToState} /> 
+          </div>
+          <div className="col-md-12">
+            <BookForm handleBookFormSubmits={this.handleBookFormSubmits} />
+          </div>
+        </div>
         {
           Object
             .keys(this.state.entries)

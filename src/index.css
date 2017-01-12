@@ -1,4 +1,4 @@
-@import url("../node_modules/bootstrap/dist/css/bootstrap.min.css");
+/*@import url("../node_modules/bootstrap/dist/css/bootstrap.min.css");*/
 
 body {
   margin: 0;
@@ -13,19 +13,13 @@ body {
 
 h1 {
 	text-align: center;
+	margin: 2em 0;
 }
 
-.guestbook-form__container {
-	max-width: 360px;
-	margin: 0 auto;
-	width: 100%;
+label {
 	display: block;
-	margin-bottom: 2rem;
 }
 
-.guestbook-form__container fieldset {
-	padding:2em;
-}
 
 .guestbook-form__container label {
 	display: block;
