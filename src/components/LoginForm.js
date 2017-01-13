@@ -18,10 +18,23 @@ class LoginForm extends Component {
 
 		base.auth().signInWithEmailAndPassword(this.email.value, this.password.value)
 			.then((user) => {
-				console.log(user);
+				//console.log(user);
+				const userInfo = {
+					name: user.displayName,
+					email: user.email
+				}
 				//this.setState({ uid: user.uid });
-				this.props.setUidToState(user.uid);
+				//this.props.setUidAndUserInfoToState(user.uid, userInfo);
 				this.loginForm.reset();
+
+				this.context.router.push({
+      		pathname: '/home',
+      		query: {login: "true"},
+      		state: {
+        		user: userInfo,
+        		uid: user.uid
+      		}
+    		});
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -54,6 +67,10 @@ class LoginForm extends Component {
 			</form>
 		)
 	}
+}
+
+LoginForm.contextTypes = {
+	router: React.PropTypes.object
 }
 
 export default LoginForm;
