@@ -16,7 +16,7 @@ class NewUserByEmail extends Component {
   createUserWithEmail(email, password){
     this.setState({ error: null });
   	// creates user and signs them in
-  	const auth = base.auth().createUserWithEmailAndPassword(email, password)
+  	base.auth().createUserWithEmailAndPassword(email, password)
   		.then((user) => {
   			console.log(user);
         const userInfo = {
@@ -28,14 +28,8 @@ class NewUserByEmail extends Component {
   		})
 			.catch((error) => {
       //Handle Errors here.
-      var errorCode = error.code;
+      //var errorCode = error.code;
       var errorMessage = error.message;
-
-      if (errorCode == 'auth/weak-password') {
-        //alert('The password is too weak.');
-      } else {
-        //alert(errorMessage);
-      }
       this.setState({ error: errorMessage });
       console.log(error);
     });

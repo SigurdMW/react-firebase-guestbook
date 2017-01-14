@@ -8,7 +8,6 @@ import base from '../base';
 // components
 import BookForm from './BookForm';
 import BookEntry from './BookEntry';
-import LoginForm from './LoginForm';
 import NewUserByEmail from './NewUserByEmail';
 
 class Main extends Component {
@@ -30,12 +29,27 @@ class Main extends Component {
 
   componentWillMount() {
     // receive props from login-page
-    if(this.props.routeParams.login){
+    if(this.context.router.location.query.login){
+      console.log("User is:");
       console.log(this.props.location.state.user);
-      console.log(this.props.location.state.uid);
+      console.log("UID er: "+this.props.location.state.uid);
+
+      const {uid, user} = this.props.location.state;
+      this.setState({
+        uid, 
+        user
+      });
     }
     // this runs right before the <App> is rendered
     syncEntities(this);
+  }
+
+  componentDidMount() {
+    base.onAuth((user) => {
+      if(user) {
+        this.setUidAndUserInfoToState(user.uid, user);
+      }
+    });
   }
 
   setUidAndUserInfoToState(uid, data){
@@ -112,6 +126,10 @@ class Main extends Component {
       </div>
     );
   }
+}
+
+Main.contextTypes = {
+  router: React.PropTypes.object
 }
 
 export default Main;

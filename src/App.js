@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import Main from './components/Main';
-
 class App extends Component {
   render() {
     return (
