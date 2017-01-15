@@ -16,7 +16,7 @@ class BookForm extends Component {
 
 	render(){
 		return (
-			<form action="" className="guestbook-form__container" ref={(input) => this.entryForm = input} onSubmit={(e) => {this.captureInput(e)}}>
+			<form className="guestbook-form__container" ref={(input) => this.entryForm = input} onSubmit={(e) => {this.captureInput(e)}}>
 				<fieldset>
 					<legend>New guestbook entry</legend>
 					<label htmlFor="text">Text</label>

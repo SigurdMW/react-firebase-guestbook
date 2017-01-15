@@ -5,20 +5,24 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <header className="main-header">
-          <span>Sigurds gjestebok</span>
-          <nav className="navigation">
-            <ul>
-              <li><Link to="/home">Home</Link></li>
-              <li><Link to="/login">Login</Link></li>
-            </ul>
-          </nav>
+         <header className="blog-masthead">
+          <div className="container">
+            <nav className="blog-nav">
+              <Link className="blog-nav-item" activeClassName="active" to="/home">Home</Link>
+              <Link className="blog-nav-item" activeClassName="active" to="/login">Login</Link>
+            </nav>
+          </div>
         </header>
         <div className="container">
           {this.props.children}
         </div>
-        <footer className="main-footer">
-          @footer
+        <footer className="blog-footer">
+          <div className="container">
+            <p>Blog template built for Bootstrap.</p>
+            <p>
+              <a href="javascript:void(0);">Back to top</a>
+            </p>
+          </div>
         </footer>
       </div>
     );

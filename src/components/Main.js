@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 // services 
-import { syncEntities, logout } from '../services/services';
+import { syncEntities } from '../services/services';
+import { logout } from '../services/auth';
 import base from '../base';
 
 // components
 import BookForm from './BookForm';
 import BookEntry from './BookEntry';
-import NewUserByEmail from './NewUserByEmail';
+import LogOut from './auth/LogOut';
+
 
 class Main extends Component {
   constructor(){
@@ -22,48 +24,40 @@ class Main extends Component {
 
     this.state = {
       entries: {},
-      users: {},
       uid: null
     };
   }
 
-  componentWillMount() {
-    // receive props from login-page
-    if(this.context.router.location.query.login){
-      console.log("User is:");
-      console.log(this.props.location.state.user);
-      console.log("UID er: "+this.props.location.state.uid);
-
-      const {uid, user} = this.props.location.state;
+  componentDidMount() {
+    if(localStorage.getItem("uid")){
+      const uid = localStorage.getItem("uid");
+      const user = JSON.parse(localStorage.getItem("user"));
       this.setState({
-        uid, 
+        uid,
         user
       });
+    } else {
+      base.onAuth((user) => {
+        if(user) {
+          this.setUidAndUserInfoToState(user.uid, user);
+          return;
+        }
+        //this.context.router.push('/login');
+      });
     }
-    // this runs right before the <App> is rendered
     syncEntities(this);
-  }
-
-  componentDidMount() {
-    base.onAuth((user) => {
-      if(user) {
-        this.setUidAndUserInfoToState(user.uid, user);
-      }
-    });
   }
 
   setUidAndUserInfoToState(uid, data){
     console.log({uid, data});
-    const users = {...this.state.users};
-    users[uid] = data;
-    this.setState({ users, uid });
+    const user = {...this.state.user};
+    this.setState({ user, uid });
   }
 
   handleLogout(e) {
     e.preventDefault();
-    console.log("clicked logout button")
-    logout();
-    this.setState({ uid: null, users: null });
+    //logout(this);
+    this.setState({ uid: null });
   }
 
   handleBookFormSubmits(value){
@@ -99,23 +93,16 @@ class Main extends Component {
   render() {
     const isLoggedIn = (this.state.uid && base.auth().currentUser) ? true : false;
     return (
-      <div className="container App">
+      <div className="App">
         <h1>Sigurds gjestebok</h1>
-        {isLoggedIn &&
-          <button onClick={(e) => this.handleLogout(e)} className="btn btn-danger">Logg ut</button>
-        }
-        {!isLoggedIn &&
-          <Link to="/login">Login</Link>
-        }
         <div className="row">
-          <div className="col-md-6">
-            <NewUserByEmail setUidAndUserInfoToState={this.setUidAndUserInfoToState} />
-          </div>
-          <div className="col-md-6">
-            {this.props.children}
-          </div>
-          <div className="col-md-12">
+          <div className="col-md-8">
             <BookForm handleBookFormSubmits={this.handleBookFormSubmits} />
+          </div>
+          <div className="col-md-4">
+            {isLoggedIn &&
+              <LogOut router={this} />
+            }
           </div>
         </div>
         {

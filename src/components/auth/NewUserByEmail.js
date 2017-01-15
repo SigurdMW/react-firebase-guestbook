@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import base from '../base';
+import base from '../../base';
 
 class NewUserByEmail extends Component {
 	constructor() {
@@ -43,6 +43,7 @@ class NewUserByEmail extends Component {
 	render(){
 		return (
       <div>
+        <h1>Ny bruker</h1>
   			<form ref={(input) => this.entryForm = input} onSubmit={(e) => {this.captureInput(e)}}>
   				<fieldset>
   					<legend>Register new user</legend>
