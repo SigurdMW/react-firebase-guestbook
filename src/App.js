@@ -20,7 +20,7 @@ class App extends Component {
           <div className="container">
             <p>Blog template built for Bootstrap.</p>
             <p>
-              <a href="javascript:void(0);">Back to top</a>
+              <span>Back to top</span>
             </p>
           </div>
         </footer>

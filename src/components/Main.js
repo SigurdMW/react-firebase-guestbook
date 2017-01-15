@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
 // services 
 import { syncEntities } from '../services/services';
-import { logout } from '../services/auth';
 import base from '../base';
 
 // components
@@ -19,7 +17,6 @@ class Main extends Component {
     this.handleBookFormSubmits = this.handleBookFormSubmits.bind(this);
     this.deleteEntry = this.deleteEntry.bind(this);
     this.editEntry = this.editEntry.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
     this.setUidAndUserInfoToState = this.setUidAndUserInfoToState.bind(this);
 
     this.state = {
@@ -52,12 +49,6 @@ class Main extends Component {
     console.log({uid, data});
     const user = {...this.state.user};
     this.setState({ user, uid });
-  }
-
-  handleLogout(e) {
-    e.preventDefault();
-    //logout(this);
-    this.setState({ uid: null });
   }
 
   handleBookFormSubmits(value){

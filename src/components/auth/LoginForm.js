@@ -37,10 +37,8 @@ class LoginForm extends Component {
 					name: user.displayName,
 					email: user.email
 				}
-				//this.setState({ uid: user.uid });
-				//this.props.setUidAndUserInfoToState(user.uid, userInfo);
 				this.loginForm.reset();
-				setLoginDataToLS(user.uid, user);
+				setLoginDataToLS(user.uid, userInfo);
 
 				const { location } = this.context.router;
 				
